@@ -1,7 +1,3 @@
-/*PENDIENTE: Revisar la clase para dejarla mas 'limpia'. En vez de métodos 
- * internos, que se llamen desde el objeto (Por ahora estoy intentando que 
- * funcione primero)*/
-
 package demos;
 
 import java.io.File;
@@ -23,11 +19,6 @@ public class DemoCleaner {
 		this.cantidadDemosTotal = 0L;
 		this.listaDeDemosAMantener = new LinkedList<Demo>();
 		this.listaDeDemosParaEliminar = new LinkedList<Demo>();
-		
-		//Métodos privados
-		this.setListaDeDemosAMantener();
-		this.excluirDemosConFormatoInvalido();
-		this.mantenerDemosConElMejorTiempo();
 	}
 	
 	//Setters & Getters
@@ -47,14 +38,11 @@ public class DemoCleaner {
 		return listaDeDemosParaEliminar;
 	}		
 	
-	//Método que confirma la eliminación de los demos seleccionados
-	public void deleteDemos(){
-		if(listaDeDemosParaEliminar.isEmpty())
-			System.out.println("No hay demos para eliminar.");
-		else{
-			System.out.println("Se eliminaran: " + listaDeDemosParaEliminar.size());
-		}
-		
+	//Desde este método se llama a los privados que clasifican los demos
+	public void analizar(){
+		this.setListaDeDemosAMantener();
+		this.excluirDemosConFormatoInvalido();
+		this.mantenerDemosConElMejorTiempo();		
 	}
 	
 	//Métodos privados para el manejo de demos
@@ -122,7 +110,8 @@ public class DemoCleaner {
 		System.out.println("Demos a eliminar: " + listaDeDemosParaEliminar.size());
 	}
 	
-	//Método privado que compara 2 tiempos para ver cual es el menor
+	/*Método privado que compara 2 tiempos para ver cual es el menor
+	 * (Revisar luego como evitar no repetir mucho el cierre de los Scanners)*/
 	private boolean esMejorTiempo(String tiempoA, String tiempoB){
 		int t1;
 		int t2;
@@ -139,13 +128,30 @@ public class DemoCleaner {
 		while(s1.hasNext() && s2.hasNext()){
 			t1 = s1.nextInt();
 			t2 = s2.nextInt();
-			if(t1 < t2)			return true;			
-			else if(t1 > t2)	return false;				
+			if(t1 < t2){
+				s1.close();s2.close();
+				return true;			
+			}
+			else if(t1 > t2){
+				s1.close();s2.close();
+				return false;				
+			}
 		}
 		
 		/*Aca no se debería llegar normalmente, pero si el primer String es mas 
 		 * largo que el segundo se retorna falso. Verdadero en caso contrario*/		
-		if(s1.hasNext()) return false;
+		if(s1.hasNext()){
+			s1.close();s2.close();
+			return false;
+		}
+		s1.close();s2.close();
 		return true;
 	}
+	
+	//Método que confirma la eliminación de los demos seleccionados
+	public void eliminarDemos(){
+		if(listaDeDemosParaEliminar.isEmpty())
+			System.out.println("No hay demos para eliminar.");
+		//Pendiente
+	}	
 }

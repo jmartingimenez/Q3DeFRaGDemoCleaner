@@ -1,3 +1,7 @@
+/*PENDIENTE: Revisar la clase para dejarla mas 'limpia'. En vez de métodos 
+ * internos, que se llamen desde el objeto (Por ahora estoy intentando que 
+ * funcione primero)*/
+
 package demos;
 
 import java.io.File;
@@ -5,24 +9,25 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class DemoCleaner {
 	private String path;
-	private Long cantidadDemos;
-	private List<Demo> listaDeDemosCompleta;
+	private Long cantidadDemosTotal;
+	private List<Demo> listaDeDemosAMantener;
 	private List<Demo> listaDeDemosParaEliminar;
 	
 	//Constructor
 	public DemoCleaner(String path){
 		this.path = path;
-		this.cantidadDemos = 0L;
-		this.listaDeDemosCompleta = new LinkedList<Demo>();
+		this.cantidadDemosTotal = 0L;
+		this.listaDeDemosAMantener = new LinkedList<Demo>();
 		this.listaDeDemosParaEliminar = new LinkedList<Demo>();
 		
 		//Métodos privados
-		this.setListaDeDemosCompleta();
+		this.setListaDeDemosAMantener();
 		this.excluirDemosConFormatoInvalido();
-		//this.mantenerDemosConElMejorTiempo();
+		this.mantenerDemosConElMejorTiempo();
 	}
 	
 	//Setters & Getters
@@ -30,12 +35,12 @@ public class DemoCleaner {
 		return path;
 	}
 	
-	public Long getCantidadDemos(){
-		return cantidadDemos;
+	public Long getCantidadDemosTotal(){
+		return cantidadDemosTotal;
 	}
 
-	public List<Demo> getListaDemosCompleta(){
-		return listaDeDemosCompleta;
+	public List<Demo> getListaDemosAMantener(){
+		return listaDeDemosAMantener;
 	}
 	
 	public List<Demo> getListaDeDemosParaEliminar(){
@@ -53,16 +58,16 @@ public class DemoCleaner {
 	}
 	
 	//Métodos privados para el manejo de demos
-	private void setListaDeDemosCompleta(){			
+	private void setListaDeDemosAMantener(){			
 		try {
 			File[] demoList;
 			demoList = this.getDemos();
 			for(int i=0;i<demoList.length;i++){
 				if(demoList[i].isFile())
-					listaDeDemosCompleta.add(new Demo(demoList[i].getName()));	
+					listaDeDemosAMantener.add(new Demo(demoList[i].getName()));	
 			}
-			this.cantidadDemos = (long)listaDeDemosCompleta.size();	
-			System.out.println("Cantidad de demos encontrados: " + cantidadDemos);
+			this.cantidadDemosTotal = (long)listaDeDemosAMantener.size();	
+			System.out.println("Demos encontrados: " + cantidadDemosTotal);
 		} catch (FileNotFoundException e) {			
 			e.getMessage();
 			e.printStackTrace();
@@ -86,34 +91,61 @@ public class DemoCleaner {
 	private void excluirDemosConFormatoInvalido(){
 		Long demoValido = (long)0;
 		Long demoInvalido = (long)0;
-		for (Demo demo : listaDeDemosCompleta) {
+		for (Demo demo : listaDeDemosAMantener) {
 			if(demo.getNombreCompleto().equals("DEMO WITH INVALID FORMAT")){
 				listaDeDemosParaEliminar.add(demo);
 				demoInvalido++;				
 			}
-			else{
-				demoValido++;
-				
-				//Descomentar para ver los demos validos por consola
-				/*System.out.println(listaDeDemosCompleta.get(i).getNombreCompleto());
-				System.out.println(listaDeDemosCompleta.get(i).getNombreMapa() + 
-						listaDeDemosCompleta.get(i).getModo() + 
-						listaDeDemosCompleta.get(i).getTiempo());*/				
-			}
+			else demoValido++;			
 		}
 		
-		listaDeDemosCompleta.removeAll(listaDeDemosParaEliminar);
-		System.out.println("Demos validos: " 	+ 	demoValido);
-		System.out.println("Demos invalidos: " 	+ 	demoInvalido);
+		listaDeDemosAMantener.removeAll(listaDeDemosParaEliminar);
+		System.out.println("Demos con formato valido: " 	+ 	demoValido);
+		System.out.println("Demos con formato invalido: " 	+ 	demoInvalido);
 	}
 	
-	/*En base SOLO a los demos validos, ahora voy a verificar los mapas repetidos 
-	 * para quitar los tiempos que no sean los mejores. Uso listaDeDemosCompleta 
-	 * al ser la que ya tiene solamente los demos con formato valido*/
+	/*Ahora voy a verificar los mapas repetidos para quitar los tiempos que no 
+	 * sean los mejores. Uso listaDeDemosCompleta al ser la que ya tiene 
+	 * solamente los demos con formato valido*/
 	private void mantenerDemosConElMejorTiempo(){
-		for(int i = 0; i < listaDeDemosCompleta.size(); i++)
-			for(int j = 0; i < listaDeDemosCompleta.size(); j++)
-				System.out.println("x");
-				//Agregar a listaDeDemosParaEliminar
+		for (Demo demoA : listaDeDemosAMantener) {
+			for (Demo demoB : listaDeDemosAMantener) {
+				if((!(demoA.getNombreCompleto().equals(demoB.getNombreCompleto()))) &&
+						demoA.getNombreMapa().equals(demoB.getNombreMapa()) &&
+						demoA.getModo().equals(demoB.getModo()) &&
+						this.esMejorTiempo(demoA.getTiempo(), demoB.getTiempo()))
+					listaDeDemosParaEliminar.add(demoB);													
+			}
+		}
+		listaDeDemosAMantener.removeAll(listaDeDemosParaEliminar);
+		System.out.println("Demos a mantener: " + listaDeDemosAMantener.size());
+		System.out.println("Demos a eliminar: " + listaDeDemosParaEliminar.size());
+	}
+	
+	//Método privado que compara 2 tiempos para ver cual es el menor
+	private boolean esMejorTiempo(String tiempoA, String tiempoB){
+		int t1;
+		int t2;
+		Scanner s1 = new Scanner(tiempoA);
+		Scanner s2 = new Scanner(tiempoB);
+		s1.useDelimiter("\\.");
+		s2.useDelimiter("\\.");
+		/*El delimiter dividio el String en partes. Suponiendo que...
+		 * 'tiempoA' = "00.09.600", 'tiempoB' = "00.09.760"...
+		 * 's1' tendra 0, 9 y 600. 's2' tendra 0, 9 y 760.
+		 * Se va iterando y se compara. Primero se comparan los dos ceros. Al no 
+		 * ser menor 's1' que 's2' (ambos 0 en esta iteración), se comprueba si 
+		 * 's2' es mayor (Esto para asegurarse de que s1 y s2 sean iguales)*/
+		while(s1.hasNext() && s2.hasNext()){
+			t1 = s1.nextInt();
+			t2 = s2.nextInt();
+			if(t1 < t2)			return true;			
+			else if(t1 > t2)	return false;				
+		}
+		
+		/*Aca no se debería llegar normalmente, pero si el primer String es mas 
+		 * largo que el segundo se retorna falso. Verdadero en caso contrario*/		
+		if(s1.hasNext()) return false;
+		return true;
 	}
 }

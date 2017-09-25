@@ -38,14 +38,14 @@ public class DemoCleaner {
 		return listaDeDemosParaEliminar;
 	}		
 	
-	//Desde este método se llama a los privados que clasifican los demos
+	//Desde este metodo se llama a los privados que clasifican los demos
 	public void analizar(){
 		this.setListaDeDemosAMantener();
 		this.excluirDemosConFormatoInvalido();
 		this.mantenerDemosConElMejorTiempo();		
 	}
 	
-	//Métodos privados para el manejo de demos
+	//Metodos privados para el manejo de demos
 	private void setListaDeDemosAMantener(){			
 		try {
 			File[] demoList;
@@ -62,7 +62,7 @@ public class DemoCleaner {
 		}
 	}
 	
-	//Método auxiliar para 'setListaDeDemosCompleta()'
+	//Metodo auxiliar para 'setListaDeDemosCompleta()'
 	private File[] getDemos() throws FileNotFoundException{
 		if(!new File(path).exists())
 			throw new FileNotFoundException("No se encontro la ruta");
@@ -93,8 +93,8 @@ public class DemoCleaner {
 	}
 	
 	/*Ahora voy a verificar los mapas repetidos para quitar los tiempos que no 
-	 * sean los mejores. Uso listaDeDemosCompleta al ser la que ya tiene 
-	 * solamente los demos con formato valido*/
+	 * sean los mejores. Uso esta lista al ser la que ya tiene solamente los demos 
+	 * con formato valido*/
 	private void mantenerDemosConElMejorTiempo(){
 		for (Demo demoA : listaDeDemosAMantener) {
 			for (Demo demoB : listaDeDemosAMantener) {
@@ -110,7 +110,7 @@ public class DemoCleaner {
 		System.out.println("Demos a eliminar: " + listaDeDemosParaEliminar.size());
 	}
 	
-	/*Método privado que compara 2 tiempos para ver cual es el menor
+	/*Metodo privado que compara 2 tiempos para ver cual es el menor
 	 * (Revisar luego como evitar no repetir mucho el cierre de los Scanners)*/
 	private boolean esMejorTiempo(String tiempoA, String tiempoB){
 		int t1;
@@ -123,7 +123,7 @@ public class DemoCleaner {
 		 * 'tiempoA' = "00.09.600", 'tiempoB' = "00.09.760"...
 		 * 's1' tendra 0, 9 y 600. 's2' tendra 0, 9 y 760.
 		 * Se va iterando y se compara. Primero se comparan los dos ceros. Al no 
-		 * ser menor 's1' que 's2' (ambos 0 en esta iteración), se comprueba si 
+		 * ser menor 's1' que 's2' (ambos 0 en esta iteracion), se comprueba si 
 		 * 's2' es mayor (Esto para asegurarse de que s1 y s2 sean iguales)*/
 		while(s1.hasNext() && s2.hasNext()){
 			t1 = s1.nextInt();
@@ -138,7 +138,7 @@ public class DemoCleaner {
 			}
 		}
 		
-		/*Aca no se debería llegar normalmente, pero si el primer String es mas 
+		/*Aca no se deberia llegar normalmente, pero si el primer String es mas 
 		 * largo que el segundo se retorna falso. Verdadero en caso contrario*/		
 		if(s1.hasNext()){
 			s1.close();s2.close();
@@ -148,7 +148,7 @@ public class DemoCleaner {
 		return true;
 	}
 	
-	//Método que confirma la eliminación de los demos seleccionados
+	//Metodo que confirma la eliminacion de los demos seleccionados
 	public void eliminarDemos(){
 		if(listaDeDemosParaEliminar.isEmpty())
 			System.out.println("No hay demos para eliminar.");

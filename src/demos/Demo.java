@@ -1,5 +1,8 @@
 package demos;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Demo {
 	private String nombreCompleto;
 	private String nombreMapa;
@@ -13,13 +16,25 @@ public class Demo {
 		try{
 			nombreMapa = nombreCompleto.substring(0,nombreCompleto.lastIndexOf("["));
 			modo = nombreCompleto.substring(nombreMapa.length(),nombreCompleto.lastIndexOf("]") + 1);
-			tiempo = nombreCompleto.substring(nombreCompleto.lastIndexOf("]") + 1,nombreCompleto.lastIndexOf("("));				
+			tiempo = nombreCompleto.substring(nombreCompleto.lastIndexOf("]") + 1,nombreCompleto.lastIndexOf("("));	
+			if(!esCorrectoElFormatoDelTiempo(tiempo))
+				throw new Exception("Formato de tiempo invalido detectado.");
 		}catch(Exception e){
+			System.out.println(e.getMessage());
 			this.nombreCompleto = "DEMO WITH INVALID FORMAT";
 			nombreMapa = null;
 			modo = null;
 			tiempo = null;
 		}
+	}
+	
+	private boolean esCorrectoElFormatoDelTiempo(String tiempo){
+		//Expresion regular para aceptar => 'numeros.numeros.numeros'
+		String REGEX = "^(?:(\\d+)\\.)?(?:(\\d+)\\.)?(\\d+)$";		
+		Pattern pattern = Pattern.compile(REGEX);
+		Matcher matcher = pattern.matcher(tiempo);
+		if(matcher.matches()) return true;		
+		return false;
 	}
 	
 	public void setNombre(String nombreCompleto){

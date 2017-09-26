@@ -29,8 +29,8 @@ public class Demo {
 	}
 	
 	private boolean esCorrectoElFormatoDelTiempo(String tiempo){
-		//Expresion regular para aceptar => 'numeros.numeros.numeros'
-		String REGEX = "^(?:(\\d+)\\.)?(?:(\\d+)\\.)?(\\d+)$";		
+		//Expresion regular para aceptar => '#####.##.###'
+		String REGEX = "^(?:(\\d{1,5})\\.)?(?:(\\d{1,2})\\.)?(\\d{1,3})$";		
 		Pattern pattern = Pattern.compile(REGEX);
 		Matcher matcher = pattern.matcher(tiempo);
 		if(matcher.matches()) return true;		

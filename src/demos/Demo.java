@@ -20,6 +20,7 @@ public class Demo {
 		try{
 			nombreMapa = nombreCompleto.substring(0,nombreCompleto.lastIndexOf("["));
 			modo = nombreCompleto.substring(nombreMapa.length(),nombreCompleto.lastIndexOf("]") + 1);
+			if(!esCorrectoElModo(modo)) throw new Exception();
 			tiempo = nombreCompleto.substring(nombreCompleto.lastIndexOf("]") + 1,nombreCompleto.lastIndexOf("("));	
 			if(!esCorrectoElFormatoDelTiempo(tiempo))
 				throw new Exception();
@@ -37,7 +38,17 @@ public class Demo {
 		Pattern pattern = Pattern.compile(REGEX);
 		Matcher matcher = pattern.matcher(tiempo);
 		if(matcher.matches()) return true;		
-		System.out.println("Demo con formato de tiempo invalido detectado.");
+		System.out.println("Demo con formato de tiempo invalido detectado: " + tiempo);
+		return false;
+	}
+	
+	//Falta agregar los FastCap
+	private boolean esCorrectoElModo(String modo){
+		if(		modo.equals("[df.vq3]") 	||
+				modo.equals("[mdf.vq3]") 	||
+				modo.equals("[df.cpm]") 	||
+				modo.equals("[mdf.cpm]"))	return true;
+		System.out.println("Demo con modo desconocido detectado: " + modo);
 		return false;
 	}
 	

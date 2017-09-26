@@ -34,7 +34,8 @@ public class Demo {
 	
 	private boolean esCorrectoElFormatoDelTiempo(String tiempo){
 		//Expresion regular para aceptar => '#####.##.###'
-		String REGEX = "^(?:(\\d{1,5})\\.)?(?:(\\d{1,2})\\.)?(\\d{1,3})$";		
+		String REGEX = "^(?:(\\d{1,5})\\.)?(?:(\\d{1,2})\\.)?(\\d{1,3})$";	
+		
 		Pattern pattern = Pattern.compile(REGEX);
 		Matcher matcher = pattern.matcher(tiempo);
 		if(matcher.matches()) return true;		
@@ -42,12 +43,21 @@ public class Demo {
 		return false;
 	}
 	
-	//Falta agregar los FastCap
 	private boolean esCorrectoElModo(String modo){
-		if(		modo.equals("[df.vq3]") 	||
-				modo.equals("[mdf.vq3]") 	||
-				modo.equals("[df.cpm]") 	||
-				modo.equals("[mdf.cpm]"))	return true;
+		/*Expresion regular para los 4 modos normales
+		 * [mdf.vq3]/[mdf.cpm]/[df.vq3]/[df.cpm]*/
+		String dfRegex = "^(\\[)(df|mdf)\\.(vq3|cpm)(])$";	
+		
+		/*Expresion regular para los modos de fastcap
+		 * [fc.vq3.X]/[mfc.cpm.X]/[fc.vq3.X]/[fc.cpm.X]
+		 * Siendo X un valor entre 0 y 7*/
+		String fcRegex = "^(\\[)(fc|mfc)\\.(vq3|cpm)\\.([0-7])(])$";	
+		
+		Pattern dfPattern = Pattern.compile(dfRegex);
+		Pattern fcPattern = Pattern.compile(fcRegex);
+		Matcher dfMatcher = dfPattern.matcher(modo);
+		Matcher fcMatcher = fcPattern.matcher(modo);
+		if(dfMatcher.matches() || fcMatcher.matches()) return true;		
 		System.out.println("Demo con modo desconocido detectado: " + modo);
 		return false;
 	}

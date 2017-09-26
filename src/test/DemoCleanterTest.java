@@ -34,7 +34,7 @@ public class DemoCleanterTest {
 		//Demos invalidos
 		final File f09 = temp.newFile("asdfaa.dm_68");
 		final File f10 = temp.newFile("mapa01-00.11.532(player1).dm_68");
-		final File f11 = temp.newFile("mapa01[mdf.vq3]3300.11.080(player1).dm_68");
+		final File f11 = temp.newFile("mapa01[mdf.vq3]330011.11.080(player1).dm_68");
 		final File f12 = temp.newFile("mapa01[mdf.vq3]33.110.080(player1).dm_68");
 		final File f13 = temp.newFile("mapa01[mdf.vq3]30.11.1080(player1).dm_68");
 		final File f14 = temp.newFile("mapa01[mdf.vq3]00.02.352.dm_68");

@@ -9,14 +9,14 @@ import java.util.Scanner;
 
 public class DemoCleaner {
 	private String path;
-	private Long cantidadDemosTotal;
+	private int cantidadDemosTotal;
 	private List<Demo> listaDeDemosAMantener;
 	private List<Demo> listaDeDemosParaEliminar;
 	
 	//Constructor
 	public DemoCleaner(String path){
 		this.path = path;
-		this.cantidadDemosTotal = 0L;
+		this.cantidadDemosTotal = 0;
 		this.listaDeDemosAMantener = new LinkedList<Demo>();
 		this.listaDeDemosParaEliminar = new LinkedList<Demo>();
 	}
@@ -26,7 +26,7 @@ public class DemoCleaner {
 		return path;
 	}
 	
-	public Long getCantidadDemosTotal(){
+	public int getCantidadDemosTotal(){
 		return cantidadDemosTotal;
 	}
 
@@ -54,7 +54,7 @@ public class DemoCleaner {
 				if(demoList[i].isFile())
 					listaDeDemosAMantener.add(new Demo(demoList[i].getName()));	
 			}
-			this.cantidadDemosTotal = (long)listaDeDemosAMantener.size();	
+			this.cantidadDemosTotal = listaDeDemosAMantener.size();	
 			System.out.println("Demos encontrados: " + cantidadDemosTotal);
 		} catch (FileNotFoundException e) {			
 			e.getMessage();
@@ -77,8 +77,8 @@ public class DemoCleaner {
 	}
 	
 	private void excluirDemosConFormatoInvalido(){
-		Long demoValido = (long)0;
-		Long demoInvalido = (long)0;
+		int demoValido = 0;
+		int demoInvalido = 0;
 		for (Demo demo : listaDeDemosAMantener) {
 			if(demo.getNombreCompleto().equals("DEMO WITH INVALID FORMAT")){
 				listaDeDemosParaEliminar.add(demo);

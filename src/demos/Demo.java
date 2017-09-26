@@ -12,15 +12,18 @@ public class Demo {
 	public Demo(String nombreCompleto){
 		this.nombreCompleto = nombreCompleto;
 		
-		//Intentando separar las partes del nombre del archivo
+		/*Intentando separar las partes del nombre del archivo
+		 * Un demo con formato correcto deberia ser como esto...
+		 * 'nombreMapa[modo.fisica]tiempo(jugador)'. Se controla que el 
+		 * formato del tiempo tenga como maximo '#####.##.###' 
+		 * ({1,5}.{1.2}.{1.3}), siendo '#' un numero entero*/
 		try{
 			nombreMapa = nombreCompleto.substring(0,nombreCompleto.lastIndexOf("["));
 			modo = nombreCompleto.substring(nombreMapa.length(),nombreCompleto.lastIndexOf("]") + 1);
 			tiempo = nombreCompleto.substring(nombreCompleto.lastIndexOf("]") + 1,nombreCompleto.lastIndexOf("("));	
 			if(!esCorrectoElFormatoDelTiempo(tiempo))
-				throw new Exception("Formato de tiempo invalido detectado.");
+				throw new Exception();
 		}catch(Exception e){
-			System.out.println(e.getMessage());
 			this.nombreCompleto = "DEMO WITH INVALID FORMAT";
 			nombreMapa = null;
 			modo = null;
@@ -34,6 +37,7 @@ public class Demo {
 		Pattern pattern = Pattern.compile(REGEX);
 		Matcher matcher = pattern.matcher(tiempo);
 		if(matcher.matches()) return true;		
+		System.out.println("Demo con formato de tiempo invalido detectado.");
 		return false;
 	}
 	

@@ -5,16 +5,14 @@ Esta aplicación, es una utilidad para:
 Q3DefragDemoCleaner es mi propia versión de una utilidad existente para 
 eliminar los demos innecesarios de la carpeta DeFRaG.
 
-Las caracteristicas deseadas seran la de informar la cantidad de demos en la 
-carpeta analizada, la cantidad de demos con el formato valido para demos usado 
-en DeFRaG 'mapName[mode.physic]time(player).dm_68' y los demos que no cumplen 
-esta condición.
+El uso es muy sencillo. En el cuadro de texto se copia el path de la carpeta 
+'demos' que se desea limpiar y se pulsa el botón 'Eliminar Demos de sobra' (o 
+se pulsa ENTER). El programa solo tiene en cuenta los archivos con extensión 
+'.dm_68' que tengan el nombre con el formato típico de DeFRaG
+(nombreMapa[modo.física]tiempo(jugador).dm_68).
 
 To do (Sin orden):
 
-- Completar las clases
-- Usar JUnit para comprobar el funcionamiento
-- Revisar el uso de Swing para añadir una interfaz gráfica
-- Revisar el tema de las barras invertidas en el path
-
-Por el momento hay código 'hardcodeado' que espero quitar pronto
+- Completar las clases y reorganizar las carpetas para ordenar mejor las cosas.
+- Pruebas exhautivas para confirmar que todo funciona perfecto.
+- Aprender cosas sobre Swing para mejorar la interfaz gráfica actual.

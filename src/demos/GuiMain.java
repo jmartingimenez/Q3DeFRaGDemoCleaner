@@ -48,7 +48,7 @@ public class GuiMain extends JFrame {
  
     //Creacion del textArea
     tArea = new JTextArea(""
-    		+ "Copia el path de la carpeta demos y pulsa el botn "
+    		+ "Copia el path de la carpeta demos y pulsa el botón "
     		+ "correspondiente (o presiona ENTER).\n"
     		+ "Cdigo fuente: https://gitlab.com/jmartingimenez-Extras/JAVA-Q3DefragDemoCleaner\n"
     		+ "================================================================\n");
@@ -61,7 +61,7 @@ public class GuiMain extends JFrame {
     tArea.setWrapStyleWord(true);
       
     //Color de fondo en RGB. No puede editarse el texto
-    tArea.setBackground(new Color(0, 0, 0)); // light blue
+    tArea.setBackground(new Color(0, 0, 0));
     tArea.setEditable(false);
       
     //Encerrando el TextArea dentro de un panel que tiene desplazamiento

@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +85,7 @@ public class DemoCleanterTest {
 		 * OBTENIENDO EL PATH TEMPORAL Y ELIMINANDO LOS DEMOS QUE NO SIRVEN*
 		 * ================================================================*/
 		
+		//Obteniendo el path y guardandolo en un String
 		File root = temp.getRoot();
 		String path = root.getAbsolutePath().replace("\\", "/");		
 		
@@ -99,8 +101,56 @@ public class DemoCleanterTest {
 		d.analizar();
 		assertEquals(21,d.getCantidadDemosTotal());
 		
+		/*====================================
+		 * ELIMINANDO LOS DEMOS QUE NO SIRVEN*
+		 * ==================================*/	
 		
+		d.eliminarDemos();		
 		
+		/*======================================
+		 * COMPROBANDO QUE ARCHIVOS QUEDARON*
+		 * ====================================*/
 		
+		//Demos validos con los mejores tiempos (No se borran)
+		assertTrue(f01.exists());
+		assertTrue(f02.exists());
+		assertTrue(f03.exists());
+		assertTrue(f04.exists());
+		assertTrue(f05.exists());
+		assertTrue(f06.exists());
+		assertTrue(f07.exists());
+		assertTrue(f08.exists());
+		assertTrue(f09.exists());
+		
+		//Demos validos pero que no tienen los mejores tiempos (Se borran)
+		assertFalse(f10.exists());
+		assertFalse(f11.exists());
+		assertFalse(f12.exists());
+		assertFalse(f13.exists());
+		
+		//Demos con formato invalido (No se borran)
+		assertTrue(f14.exists());
+		assertTrue(f15.exists());
+		assertTrue(f16.exists());
+		assertTrue(f17.exists());
+		assertTrue(f18.exists());
+		assertTrue(f19.exists());
+		assertTrue(f20.exists());
+		assertTrue(f21.exists());
+		
+		//Archivos que el DemoCleaner no analiza (No se borran)
+		assertTrue(f22.exists());
+		assertTrue(f23.exists());		
+		
+		/*Comprobando que la cantidad de archivos terminados es menor. 
+		 * Solo se borraron los 4 demos que tienen tiempos malos. 
+		 * Se dejo los demos con mejores tiempos, los archivos que no son 
+		 * dm_68 y los que si lo son, pero no tienen el formato correcto 
+		 * (No voy a eliminarlos simplemente porque tengan mal formato)*/
+		d = new DemoCleaner(path);
+		d.analizar();
+		cantidadDeArchivosEncontrados = new File(path).listFiles().length;
+		assertEquals(19, cantidadDeArchivosEncontrados);
+		assertEquals(17, d.getCantidadDemosTotal());
 	}
 }

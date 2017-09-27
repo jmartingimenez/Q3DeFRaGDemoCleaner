@@ -69,7 +69,6 @@ public class DemoCleaner {
 			}
 			this.cantidadDemosTotal = listaDeDemosAMantener.size();	
 		} catch (FileNotFoundException e) {			
-			e.getMessage();
 			e.printStackTrace();
 		}
 	}
@@ -89,11 +88,10 @@ public class DemoCleaner {
 	}
 	
 	private void excluirDemosConFormatoInvalido(){
-		for (Demo demo : listaDeDemosAMantener) {
-			if(demo.getNombreCompleto().equals("DEMO WITH INVALID FORMAT")){
-				listaDeDemosParaEliminar.add(demo);		
-			}
-		}		
+		for (Demo demo : listaDeDemosAMantener)
+			if(demo.getNombreCompleto().equals("DEMO WITH INVALID FORMAT"))
+				listaDeDemosParaEliminar.add(demo);	
+		
 		listaDeDemosAMantener.removeAll(listaDeDemosParaEliminar);
 	}
 	
@@ -101,15 +99,14 @@ public class DemoCleaner {
 	 * sean los mejores. Uso esta lista al ser la que ya tiene solamente los demos 
 	 * con formato valido*/
 	private void mantenerDemosConElMejorTiempo(){
-		for (Demo demoA : listaDeDemosAMantener) {
-			for (Demo demoB : listaDeDemosAMantener) {
+		for (Demo demoA : listaDeDemosAMantener)
+			for (Demo demoB : listaDeDemosAMantener)
 				if((!(demoA.getNombreCompleto().equals(demoB.getNombreCompleto()))) &&
 						demoA.getNombreMapa().equals(demoB.getNombreMapa()) &&
 						demoA.getModo().equals(demoB.getModo()) &&
 						this.esMejorTiempo(demoA.getTiempo(), demoB.getTiempo()))
-					listaDeDemosParaEliminar.add(demoB);													
-			}
-		}
+					listaDeDemosParaEliminar.add(demoB);
+
 		listaDeDemosAMantener.removeAll(listaDeDemosParaEliminar);
 	}
 	
@@ -156,7 +153,14 @@ public class DemoCleaner {
 		if(listaDeDemosParaEliminar.isEmpty() || !analisisCompleto)
 			System.out.println("No hay demos para eliminar o no se realizo analisis.");
 		else{
-			//Pendiente
+			//Este metodo corre si o si despues del analisis, no necesito try-catch
+			File listaDeArchivos = new File(path);
+			for (File file : listaDeArchivos.listFiles()) {
+				Demo d = new Demo(file.getName());				
+				if(listaDeDemosParaEliminar.contains(d) &&
+						(!d.getNombreCompleto().equals("DEMO WITH INVALID FORMAT")))
+					file.delete();
+			}
 		}		
 	}	
 }

@@ -45,8 +45,8 @@ public class DemoCleaner {
 			return ">ERROR!!: Debe realizarse el análisis primero.";
 		else{
 			return  "\n>Total de demos encontrados: " + cantidadDemosTotal +
-					"\n>Total de demos a mantener: " + listaDeDemosAMantener.size() + 
-					"\n>Total de demos a eliminar: " + listaDeDemosParaEliminar.size();
+					"\n>Total de demos actual: " + listaDeDemosAMantener.size() + 
+					"\n>Total de demos eliminados: " + listaDeDemosParaEliminar.size();
 		}
 	}
 	

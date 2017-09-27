@@ -12,6 +12,7 @@ public class DemoCleaner {
 	private int cantidadDemosTotal;
 	private List<Demo> listaDeDemosAMantener;
 	private List<Demo> listaDeDemosParaEliminar;
+	private boolean analisisCompleto;
 	
 	//Constructor
 	public DemoCleaner(String path){
@@ -19,6 +20,7 @@ public class DemoCleaner {
 		this.cantidadDemosTotal = 0;
 		this.listaDeDemosAMantener = new LinkedList<Demo>();
 		this.listaDeDemosParaEliminar = new LinkedList<Demo>();
+		this.analisisCompleto = false;
 	}
 	
 	//Setters & Getters
@@ -36,13 +38,24 @@ public class DemoCleaner {
 	
 	public List<Demo> getListaDeDemosParaEliminar(){
 		return listaDeDemosParaEliminar;
-	}		
+	}	
+	
+	public void info(){
+		if(!analisisCompleto) 
+			System.out.print("Error!!: Debe realizarse el analisis primero");
+		else{
+			System.out.println("Total de demos encontrados: " + cantidadDemosTotal);
+			System.out.println("Total de demos a mantener: " + listaDeDemosAMantener.size());
+			System.out.println("Total de demos a eliminar: " + listaDeDemosParaEliminar.size());			
+		}
+	}
 	
 	//Desde este metodo se llama a los privados que clasifican los demos
 	public void analizar(){
 		this.setListaDeDemosAMantener();
 		this.excluirDemosConFormatoInvalido();
-		this.mantenerDemosConElMejorTiempo();		
+		this.mantenerDemosConElMejorTiempo();
+		analisisCompleto = true;
 	}
 	
 	//Metodos privados para el manejo de demos
@@ -55,7 +68,6 @@ public class DemoCleaner {
 					listaDeDemosAMantener.add(new Demo(demoList[i].getName()));	
 			}
 			this.cantidadDemosTotal = listaDeDemosAMantener.size();	
-			System.out.println("Demos encontrados: " + cantidadDemosTotal);
 		} catch (FileNotFoundException e) {			
 			e.getMessage();
 			e.printStackTrace();
@@ -77,19 +89,12 @@ public class DemoCleaner {
 	}
 	
 	private void excluirDemosConFormatoInvalido(){
-		int demoValido = 0;
-		int demoInvalido = 0;
 		for (Demo demo : listaDeDemosAMantener) {
 			if(demo.getNombreCompleto().equals("DEMO WITH INVALID FORMAT")){
-				listaDeDemosParaEliminar.add(demo);
-				demoInvalido++;				
+				listaDeDemosParaEliminar.add(demo);		
 			}
-			else demoValido++;			
-		}
-		
+		}		
 		listaDeDemosAMantener.removeAll(listaDeDemosParaEliminar);
-		System.out.println("Demos con formato valido: " 	+ 	demoValido);
-		System.out.println("Demos con formato invalido: " 	+ 	demoInvalido);
 	}
 	
 	/*Ahora voy a verificar los mapas repetidos para quitar los tiempos que no 
@@ -106,8 +111,6 @@ public class DemoCleaner {
 			}
 		}
 		listaDeDemosAMantener.removeAll(listaDeDemosParaEliminar);
-		System.out.println("Demos a mantener: " + listaDeDemosAMantener.size());
-		System.out.println("Demos a eliminar: " + listaDeDemosParaEliminar.size());
 	}
 	
 	/*Metodo privado que compara 2 tiempos para ver cual es el menor
@@ -150,8 +153,10 @@ public class DemoCleaner {
 	
 	//Metodo que confirma la eliminacion de los demos seleccionados
 	public void eliminarDemos(){
-		if(listaDeDemosParaEliminar.isEmpty())
-			System.out.println("No hay demos para eliminar.");
-		//Pendiente
+		if(listaDeDemosParaEliminar.isEmpty() || !analisisCompleto)
+			System.out.println("No hay demos para eliminar o no se realizo analisis.");
+		else{
+			//Pendiente
+		}		
 	}	
 }

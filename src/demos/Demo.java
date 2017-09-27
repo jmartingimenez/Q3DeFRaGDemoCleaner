@@ -39,7 +39,6 @@ public class Demo {
 		Pattern pattern = Pattern.compile(REGEX);
 		Matcher matcher = pattern.matcher(tiempo);
 		if(matcher.matches()) return true;		
-		System.out.println("Demo con formato de tiempo invalido detectado: " + tiempo);
 		return false;
 	}
 	
@@ -58,7 +57,6 @@ public class Demo {
 		Matcher dfMatcher = dfPattern.matcher(modo);
 		Matcher fcMatcher = fcPattern.matcher(modo);
 		if(dfMatcher.matches() || fcMatcher.matches()) return true;		
-		System.out.println("Demo con modo desconocido detectado: " + modo);
 		return false;
 	}
 	

@@ -3,23 +3,23 @@ package demos;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class DemoCleaner {
 	private String path;
 	private int cantidadDemosTotal;
-	private List<Demo> listaDeDemosAMantener;
-	private List<Demo> listaDeDemosParaEliminar;
+	private Set<Demo> listaDeDemosAMantener;
+	private Set<Demo> listaDeDemosParaEliminar;
 	private boolean analisisCompleto;
 	
 	//Constructor
 	public DemoCleaner(String path){
 		this.path = path;
 		this.cantidadDemosTotal = 0;
-		this.listaDeDemosAMantener = new LinkedList<Demo>();
-		this.listaDeDemosParaEliminar = new LinkedList<Demo>();
+		this.listaDeDemosAMantener = new HashSet<Demo>();
+		this.listaDeDemosParaEliminar = new HashSet<Demo>();
 		this.analisisCompleto = false;
 	}
 	
@@ -32,21 +32,21 @@ public class DemoCleaner {
 		return cantidadDemosTotal;
 	}
 
-	public List<Demo> getListaDemosAMantener(){
+	public Set<Demo> getListaDemosAMantener(){
 		return listaDeDemosAMantener;
 	}
 	
-	public List<Demo> getListaDeDemosParaEliminar(){
+	public Set<Demo> getListaDeDemosParaEliminar(){
 		return listaDeDemosParaEliminar;
 	}	
 	
-	public void info(){
-		if(!analisisCompleto) 
-			System.out.print("Error!!: Debe realizarse el analisis primero");
+	public String info(){
+		if(!analisisCompleto)
+			return ">ERROR!!: Debe realizarse el análisis primero.";
 		else{
-			System.out.println("Total de demos encontrados: " + cantidadDemosTotal);
-			System.out.println("Total de demos a mantener: " + listaDeDemosAMantener.size());
-			System.out.println("Total de demos a eliminar: " + listaDeDemosParaEliminar.size());			
+			return  "\n>Total de demos encontrados: " + cantidadDemosTotal +
+					"\n>Total de demos a mantener: " + listaDeDemosAMantener.size() + 
+					"\n>Total de demos a eliminar: " + listaDeDemosParaEliminar.size();
 		}
 	}
 	

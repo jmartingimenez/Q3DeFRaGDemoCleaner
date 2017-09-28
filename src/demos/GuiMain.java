@@ -50,7 +50,7 @@ public class GuiMain extends JFrame {
     tArea = new JTextArea(""
     		+ "Copia el path de la carpeta demos y pulsa el botón "
     		+ "correspondiente (o presiona ENTER).\n"
-    		+ "Cdigo fuente: https://gitlab.com/jmartingimenez-Extras/JAVA-Q3DefragDemoCleaner\n"
+    		+ "Código fuente: https://gitlab.com/jmartingimenez-Extras/JAVA-Q3DefragDemoCleaner\n"
     		+ "================================================================\n");
     tArea.setFont(new Font("Arial", Font.PLAIN, 13));
     tArea.setForeground(Color.green);
@@ -76,8 +76,8 @@ public class GuiMain extends JFrame {
     cp.add(tAreaScrollPane, BorderLayout.CENTER);
  
     /*El programa finaliza al cerrar la ventana. Defino lo que sale en la 
-     * barra de titulo. Seteo el tamao de la ventana (no se puede cambiar su 
-     * tamao)y que esta sea visible*/
+     * barra de titulo. Seteo el tamaño de la ventana (no se puede cambiar su 
+     * tamaño)y que esta sea visible*/
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setTitle("DeFRaG Demo Cleaner - By Yony!");
     setSize(560, 320);

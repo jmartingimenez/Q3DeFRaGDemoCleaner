@@ -8,6 +8,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
 
  
 @SuppressWarnings("serial")
@@ -33,7 +34,14 @@ public class GuiMain extends JFrame {
     	    tArea.setCaretPosition(tArea.getDocument().getLength());
             eliminarDemos(tField.getText(), tArea);
         }
-    }); 
+    });    
+    
+    //Opcion contextual para pegar el path con click derecho
+    JPopupMenu popup = new JPopupMenu();
+    JMenuItem item = new JMenuItem(new DefaultEditorKit.PasteAction());
+    item.setText("Pegar");
+    popup.add(item);
+    tField.setComponentPopupMenu(popup);    
 
     //Boton de eliminar. Si apretas ENTER va al metodo
     tButton = new JButton("Eliminar Demos de sobra");

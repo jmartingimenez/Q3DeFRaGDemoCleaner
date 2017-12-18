@@ -64,11 +64,11 @@ public class DemoCleaner {
 		try {
 			File[] demoList;
 			demoList = this.getDemos();
-			for(int i=0;i<demoList.length;i++){
+			cantidadDemosTotal = demoList.length;
+			for(int i=0;i<cantidadDemosTotal;i++){
 				if(demoList[i].isFile())
 					listaDeDemosAMantener.add(new Demo(demoList[i].getName()));	
 			}
-			this.cantidadDemosTotal = listaDeDemosAMantener.size();	
 		} catch (FileNotFoundException e) {			
 			e.printStackTrace();
 		}

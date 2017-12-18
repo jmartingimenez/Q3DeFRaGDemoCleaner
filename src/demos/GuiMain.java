@@ -50,7 +50,7 @@ public class GuiMain extends JFrame {
     tArea = new JTextArea(""
     		+ "Copia el path de la carpeta demos y pulsa el botón "
     		+ "correspondiente (o presiona ENTER).\n"
-    		+ "Código fuente: https://gitlab.com/jmartingimenez-Extras/JAVA-Q3DefragDemoCleaner\n"
+    		+ "Código fuente: https://github.com/jmartingimenez/Q3DeFRaGDemoCleaner\n"
     		+ "================================================================\n");
     tArea.setFont(new Font("Arial", Font.PLAIN, 13));
     tArea.setForeground(Color.green);
@@ -107,6 +107,11 @@ public class GuiMain extends JFrame {
 			tArea.append("\n>ERROR!!: No se encuentra el path.");
 		}catch(SecurityException e){
 			tArea.append("\n>ERROR!!: No hay permisos suficientes.");
+		}catch(Exception e){
+			tArea.append("\nERROR!!: Fallo no esperado. Contacte al creador de la "
+					+ "aplicación e informele sobre el siguiente error: " 
+					+ e.getClass().getSimpleName());
+			e.printStackTrace();
 		}
 	}   
    

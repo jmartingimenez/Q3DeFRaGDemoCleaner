@@ -37,11 +37,11 @@ public class GuiMain extends JFrame {
     });    
     
     //Opcion contextual para pegar el path con click derecho
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem item = new JMenuItem(new DefaultEditorKit.PasteAction());
-    item.setText("Pegar");
-    popup.add(item);
-    tField.setComponentPopupMenu(popup);    
+    JPopupMenu popupPath = new JPopupMenu();
+    JMenuItem itemPath = new JMenuItem(new DefaultEditorKit.PasteAction());
+    itemPath.setText("Pegar");
+    popupPath.add(itemPath);
+    tField.setComponentPopupMenu(popupPath);    
 
     //Boton de eliminar. Si apretas ENTER va al metodo
     tButton = new JButton("Eliminar Demos de sobra");
@@ -61,8 +61,15 @@ public class GuiMain extends JFrame {
     		+ "Código fuente: https://github.com/jmartingimenez/Q3DeFRaGDemoCleaner\n"
     		+ "================================================================\n");
     tArea.setFont(new Font("Arial", Font.PLAIN, 13));
-    tArea.setForeground(Color.green);
-      
+    tArea.setForeground(Color.green);      
+    
+    //Opcion contextual para copiar en la caja de texto
+    JPopupMenu popupArea = new JPopupMenu();
+    JMenuItem itemArea = new JMenuItem(new DefaultEditorKit.CopyAction());
+    itemArea.setText("Copiar");
+    popupArea.add(itemArea);
+    tArea.setComponentPopupMenu(popupArea);    
+    
     /*Si los caracteres superan el ancho, salen debajo. Esto en falso crearia 
     * Una barra de desplazamiento horizontal*/
     tArea.setLineWrap(true);       

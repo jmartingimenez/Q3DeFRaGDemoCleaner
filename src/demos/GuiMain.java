@@ -94,7 +94,7 @@ public class GuiMain extends JFrame {
      * barra de titulo. Seteo el tamaño de la ventana (no se puede cambiar su 
      * tamaño)y que esta sea visible*/
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setTitle("DeFRaG Demo Cleaner - By Yony!");
+    setTitle("DeFRaG Demo Cleaner by Yony! - v0.1"); //Sobre versionado -> https://semver.org/
     setSize(560, 320);
     setResizable(false);
     setVisible(true);   

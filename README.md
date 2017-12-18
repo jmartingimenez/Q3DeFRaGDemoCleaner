@@ -16,3 +16,7 @@ To do (Sin orden):
 - Completar las clases y reorganizar las carpetas para ordenar mejor las cosas.
 - Pruebas exhautivas para confirmar que todo funciona perfecto.
 - Aprender cosas sobre Swing para mejorar la interfaz gráfica actual.
+
+Generando un ejecutable en Eclipse:
+
+- File -> Export -> Java -> Runnable JAR File -> Elegir 'GUIMain' en 'Launch Configuration' 

@@ -17,6 +17,10 @@ To do (Sin orden):
 - Pruebas exhautivas para confirmar que todo funciona perfecto.
 - Aprender cosas sobre Swing para mejorar la interfaz gráfica actual.
 
+Aclaración sobre el Release
+
+- Require Java 8. Para usar una versión anterior descargar el código fuente y crear el JAR
+
 Generando un ejecutable en Eclipse:
 
 - File -> Export -> Java -> Runnable JAR File -> Elegir 'GUIMain' en 'Launch Configuration' 
